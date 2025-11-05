@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text and Video</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <img src="./src/logo.png" alt="Logo" class="corner-logo">
+
+    <div class="content">
+        <section class="about" id="about">
+            <h2>О нас</h2>
+            <p>Мы - "ХимЧу". Специализируемся на проектировании и ручном изготовлении химической посуды любой сложности — от стандартных колб Бунзена до уникальных установок по индивидуальным чертежам. Надежность, точность и соответствие стандартам для вашей лаборатории.</p>
+            
+            <div class="about-mission">
+                <h3>Наша миссия</h3>
+                <p>Быть надежным партнером для лабораторий по всему миру, предоставляя неизменно качественную продукцию, которая позволяет нашим клиентам сосредоточиться на главном — на своих исследованиях</p>
+            </div>
+
+            <div class="about-gallery">
+                <h3>Наши работы</h3>
+                <div class="gallery-grid">
+                    <img src="./src/posuda/1.jpg" alt="Химическая посуда 1" loading="lazy">
+                    <img src="./src/posuda/2.jpg" alt="Химическая посуда 2" loading="lazy">
+                    <img src="./src/posuda/3.jpg" alt="Химическая посуда 3" loading="lazy">
+                    <img src="./src/posuda/4.jpg" alt="Химическая посуда 4" loading="lazy">
+                    <img src="./src/posuda/5.jpg" alt="Химическая посуда 5" loading="lazy">
+                    <img src="./src/posuda/6.jpg" alt="Химическая посуда 6" loading="lazy">
+                    <img src="./src/posuda/7.jpg" alt="Химическая посуда 7" loading="lazy">
+                    <img src="./src/posuda/8.jpg" alt="Химическая посуда 8" loading="lazy">
+                    <img src="./src/posuda/9.jpg" alt="Химическая посуда 9" loading="lazy">
+                    <img src="./src/posuda/10.jpg" alt="Химическая посуда 10" loading="lazy">
+                    <img src="./src/posuda/11.jpg" alt="Химическая посуда 11" loading="lazy">
+                    <img src="./src/posuda/12.jpg" alt="Химическая посуда 12" loading="lazy">
+                    <img src="./src/posuda/13.jpg" alt="Химическая посуда 13" loading="lazy">
+                </div>
+            </div>
+            
+            <div class="values">
+                <h3>Наши ценности</h3>
+                <p>Фундаментальные ценности, лежащие в основе нашей стратегии развития:</p>
+                <ul class="values-list">
+                    <li>
+                        <h4>Доступность</h4>
+                        <p>Мы считаем, что финансирование не должно быть препятствием для открытий. Каждый исследователь, студент и стартап должен иметь доступ к надёжному оборудованию. Честное ценообразование и прозрачная политика цен — наши обязательства.</p>
+                    </li>
+                    <li>
+                        <h4>Высокий уровень качества</h4>
+                        <p>Доступность не означает компромисс с качеством. Мы не идём на уступки в вопросах точности, безопасности и долговечности: строгий контроль на всех этапах производства, проверенные материалы и соответствие международным стандартам.</p>
+                    </li>
+                    <li>
+                        <h4>Честность и прозрачность</h4>
+                        <p>Строим доверительные отношения через открытость: прозрачная структура цены, честные описания продуктов с указанием допусков и ограничений, а также оперативная коммуникация в случае вопросов или претензий.</p>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="contacts" id="contacts">
+                <h3>Контакты</h3>
+                <p>Телефон: <a href="tel:+78001234567">+7 (800) 123-45-67</a></p>
+                <p>Email: <a href="mailto:info@himchu.example">info@himchu.example</a></p>
+                <p>Адрес: г. Москва, ул. Примерная, 1</p>
+            </div>
+        </section>
+    </div>
+
+    <div class="video-container" aria-hidden="false">
+        <video id="floating-video" class="portrait" autoplay muted loop playsinline>
+            <source src="./src/video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <!-- Модальное окно для просмотра изображений -->
+    <div class="modal" id="imageModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <img id="modalImage" src="" alt="Увеличенное изображение">
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

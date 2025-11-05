@@ -1,0 +1,446 @@
+body {
+    margin: 0;
+    padding: 20px;
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    color: white;
+}
+
+/* Адаптивный фон и лёгкое затемнение, чтобы текст был читаем */
+body {
+    /* если styles.css в той же папке, что и bg.jpg — относительный путь корректен */
+    background-image: url('./src/bg.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    /* Фон фиксируем — картинка остаётся на месте при скролле */
+    background-attachment: fixed;
+    background-color: #111; /* запасной фон при загрузке картинки */
+    position: relative;
+    min-height: 100vh;
+}
+
+/* Полупрозрачный слой поверх картинки (чтобы сделать фон тусклее) */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.35); /* подкорректируй 0.35 -> 0.25/0.45 по вкусу */
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Контент и плеер должны быть выше затемнения */
+.content {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding-top: 0; /* Убрали запас для плеера */
+}
+
+.text-block {
+    margin-bottom: 20px;
+}
+
+/* Вертикальный плеер как на телефоне */
+.video-container {
+    position: fixed;
+    top: 20px; /* Подвинем видео ближе к верху */
+    right: 20px;
+    width: 220px;               /* ширина плеера в десктопной версии */
+    z-index: 1000;
+    background: transparent;
+    display: block;
+    pointer-events: auto;
+}
+
+/* Сам video в портретном формате 9:16 */
+.video-container video {
+    width: 100%;
+    aspect-ratio: 9 / 16;      /* гарантирует портретную ориентацию */
+    height: auto;
+    object-fit: cover;
+    border-radius: 14px;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.25);
+    background: #000;
+    display: block;
+}
+
+/* Сам iframe в портретном формате 9:16 */
+.video-container iframe,
+.video-container .portrait-iframe {
+    width: 100%;
+    aspect-ratio: 9 / 16;      /* гарантирует портретную ориентацию */
+    height: auto;
+    border-radius: 14px;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.25);
+    background: #000;
+    display: block;
+    border: 0;
+}
+
+/* Меньшие экраны — центрируем вверху и делаем адаптивную ширину */
+@media (max-width: 480px) {
+    .video-container {
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+        top: calc(12px + 64px); /* учёт топбара и небольшой верхний отступ на мобилке */
+        width: 36vw; /* адаптивная ширина на телефонах */
+    }
+
+    .content {
+        padding-top: 56vw; /* запас под высоту плеера на маленьких экранах */
+    }
+
+    /* Меньше затемнения на очень маленьких экранах (опционально) */
+    body::before {
+        background: rgba(0,0,0,0.25);
+    }
+}
+
+/* Модальное окно */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    overflow: auto;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal.show {
+    display: flex;
+    opacity: 1;
+}
+
+.modal-content {
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    max-width: 90%;
+    max-height: 90vh;
+}
+
+#modalImage {
+    max-width: 100%;
+    max-height: 90vh;
+    object-fit: contain;
+    background: transparent;
+    padding: 0;
+    box-shadow: none;
+}
+
+.close-modal {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    color: #fff;
+    font-size: 36px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.close-modal:hover {
+    color: #ddd;
+}
+
+/* Планшеты - 3 карточки в ряд */
+@media (max-width: 900px) {
+    .gallery-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+    }
+}
+
+/* Фоллбек для мобильных: background-attachment: fixed плохо поддерживается на многих мобильных браузерах,
+   поэтому на устройствах до 768px включаем прокручиваемый фон. */
+@media (max-width: 768px) {
+    body {
+        background-attachment: scroll;
+    }
+    body::before {
+        /* чуть более тёмный оверлей на мобильных, если нужно */
+        background: rgba(0,0,0,0.5);
+    }
+}
+
+/* Стандартные отступы страницы — единый блок (убраны дубликаты и отступы для топбара) */
+/* По умолчанию: margin 0, padding 20px, белый цвет текста (если не переопределено выше). */
+/* Вёрстка больше не зависит от топбара — topbar был удалён. */
+
+/* Топбар */
+.topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    background: rgba(256,256,256,0.65);
+    backdrop-filter: blur(4px);
+    z-index: 2000;
+}
+
+/* Логотип в топбаре */
+.topbar-logo {
+    height: 44px;
+    width: auto;
+    display: block;
+}
+
+.corner-logo {
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    height: 228px; /* увеличил с 44px до 72px */
+    width: auto;
+    z-index: 3000;
+    border-radius: 8px;
+    background: transparent;
+    display: block;
+}
+
+/* Меньше логотип на очень маленьких экранах */
+@media (max-width: 400px) {
+    .corner-logo {
+        height: 56px; /* адаптивный размер на узких экранах */
+        top: 8px;
+        left: 8px;
+    }
+}
+
+.about {
+    position: relative;
+    margin-top: 40px;
+    padding: 40px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    color: #222; /* базовый цвет текста */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.about:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.25);
+}
+
+.about::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 100%;
+    background: linear-gradient(180deg, #0044cc, #0077b6);
+    border-radius: 16px 0 0 16px;
+}
+
+.about h2 {
+    margin: 0 0 12px 0;
+    font-size: 2.2rem;
+    color: #003366; /* глубокий синий, хорошо читается на светлом фоне */
+    letter-spacing: 0.4px;
+    text-shadow: 0 1px 2px rgba(255,255,255,0.5);
+}
+
+.about p {
+    margin: 0;
+    line-height: 1.7;
+    font-size: 1.15rem;
+    color: #333; /* тёмно-серый текст для лучшего контраста */
+}
+
+/* Блок с миссией внутри about */
+.about-mission {
+    margin-top: 32px;
+    padding-top: 28px;
+    border-top: 2px solid rgba(0,0,0,0.08);
+}
+
+.about-mission h3 {
+    font-size: 1.8rem;
+    margin: 0 0 12px 0;
+    color: #003366;
+    letter-spacing: 0.4px;
+    text-shadow: 0 1px 2px rgba(255,255,255,0.5);
+}
+
+.about-mission p {
+    margin: 0;
+    line-height: 1.7;
+    font-size: 1.15rem;
+    color: #333;
+}
+
+/* Блок "Наши ценности" */
+.values {
+    margin-top: 32px;
+    padding-top: 28px;
+    border-top: 2px solid rgba(0,0,0,0.06);
+}
+
+.values h3 {
+    font-size: 1.8rem;
+    margin: 0 0 12px 0;
+    color: #003366;
+}
+
+.values p {
+    margin: 0 0 12px 0;
+    font-size: 1.05rem;
+    color: #333;
+}
+
+.values-list {
+    list-style: none;
+    padding: 0;
+    margin: 12px 0 0 0;
+}
+
+.values-list li {
+    margin-bottom: 18px;
+}
+
+.values-list h4 {
+    margin: 0 0 6px 0;
+    font-size: 1.1rem;
+    color: #00407a;
+}
+
+.values-list p {
+    margin: 0;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Контакты */
+.contacts {
+    margin-top: 32px;
+    padding: 22px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.9);
+    border: 1px solid rgba(0,0,0,0.06);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    color: #222;
+}
+
+.contacts h3 {
+    margin: 0 0 8px 0;
+    font-size: 1.4rem;
+    color: #003366;
+}
+
+.contacts p {
+    margin: 6px 0;
+    font-size: 1rem;
+    color: #333;
+}
+
+.contacts a {
+    color: #0b66c3;
+    text-decoration: none;
+}
+
+.contacts a:hover {
+    text-decoration: underline;
+}
+
+/* Галерея внутри about */
+.about-gallery {
+    margin-top: 40px;
+    padding-top: 32px;
+    border-top: 2px solid rgba(0,0,0,0.08);
+}
+
+.about-gallery h3 {
+    font-size: 1.8rem;
+    margin: 0 0 20px 0;
+    color: #003366;
+    letter-spacing: 0.4px;
+    text-shadow: 0 1px 2px rgba(255,255,255,0.5);
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    width: 100%;
+    padding: 8px;
+}
+
+.gallery-grid img {
+    width: 100%;
+    height: 200px;
+    object-fit: contain;
+    border-radius: 0;
+    padding: 12px;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.gallery-grid img:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+/* Адаптация для мобильных экранов */
+@media (max-width: 480px) {
+    .about {
+        padding: 12px;
+        border-radius: 8px;
+    }
+
+    .about h2 {
+        font-size: 1.05rem;
+    }
+    
+    .about-mission {
+        margin-top: 20px;
+        padding-top: 16px;
+    }
+    
+    .about-mission h3 {
+        font-size: 1.05rem;
+        margin-bottom: 8px;
+    }
+
+    .about-gallery {
+        margin-top: 24px;
+        padding-top: 20px;
+    }
+
+    .about-gallery h3 {
+        font-size: 1.05rem;
+        margin-bottom: 12px;
+    }
+
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        padding: 4px;
+    }
+
+    .gallery-grid img {
+        height: 160px;
+        padding: 8px;
+    }
+}
